@@ -15,5 +15,5 @@ function factorial(num) {
 for (const line of input) {
     const [N, M] = line.split(" ").map(Number);
 
-    console.log(Math.round(factorial(M) / factorial(N) / factorial(M - N)));
+    console.log(Math.round(factorial(M) / (factorial(N) * factorial(M - N))));
 }
