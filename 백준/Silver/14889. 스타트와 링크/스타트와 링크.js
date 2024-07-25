@@ -27,21 +27,14 @@ function getCombinations(arr, selectNum) {
     return result;
 }
 
-function getPermutations(arr, selectNum) {
-    if (selectNum === 1) return arr.map((el) => [el]);
+function carculateTeamAbility(team) {
+    let result = 0;
 
-    const result = [];
-
-    arr.forEach((fixed, idx, origin) => {
-        const rest = [...origin.slice(0, idx), ...origin.slice(idx + 1)];
-        const permutations = getPermutations(rest, selectNum - 1);
-        const attached = permutations.map((permutation) => [
-            fixed,
-            ...permutation,
-        ]);
-
-        result.push(...attached);
-    });
+    for (let i = 0; i < team.length; i++) {
+        for (let j = 0; j < team.length; j++) {
+            result += ability[team[i]][team[j]];
+        }
+    }
 
     return result;
 }
@@ -50,26 +43,17 @@ const combinations = getCombinations(
     new Array(N).fill().map((_, idx) => idx),
     N / 2
 );
-let min = 10000000;
+
+let min = Infinity;
 
 for (let i = 0; i < combinations.length; i++) {
-    let start = 0;
-    let link = 0;
-
-    // 스타트팀
-    for (const [a, b] of getPermutations(combinations[i], 2)) {
-        start += ability[a][b];
-    }
-
     const linkTeam = new Array(N)
         .fill()
         .map((_, idx) => idx)
         .filter((el) => !combinations[i].includes(el));
 
-    // 링크팀
-    for (const [a, b] of getPermutations(linkTeam, 2)) {
-        link += ability[a][b];
-    }
+    const start = carculateTeamAbility(combinations[i]);
+    const link = carculateTeamAbility(linkTeam);
 
     min = Math.min(min, Math.abs(start - link));
 }
