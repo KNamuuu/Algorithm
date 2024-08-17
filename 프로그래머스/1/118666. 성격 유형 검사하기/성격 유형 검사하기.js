@@ -20,10 +20,14 @@ function solution(survey, choices) {
         choice > 0 ? char[b] += choice : char[a] += Math.abs(choice);
     }
     
-    char["R"] >= char["T"] ? answer += "R" : answer += "T";
-    char["C"] >= char["F"] ? answer += "C" : answer += "F";
-    char["J"] >= char["M"] ? answer += "J" : answer += "M";
-    char["A"] >= char["N"] ? answer += "A" : answer += "N";
+    function compare(c1, c2){
+        return char[c1] >= char[c2] ? c1 : c2;
+    }
+    
+    answer += compare("R", "T");
+    answer += compare("C", "F");
+    answer += compare("J", "M");
+    answer += compare("A", "N");
     
     return answer;
 }
