@@ -7,13 +7,12 @@ const input = require("fs")
 
 const [N, M] = input.shift().split(" ").map(Number);
 const words = input.splice(0, N);
-const wordMap = new Map();
-words.forEach((word) => wordMap.set(word));
+const wordSet = new Set(words);
 
 let answer = 0;
 
 for (const word of input) {
-    if (wordMap.has(word)) answer++;
+    if (wordSet.has(word)) answer++;
 }
 
 console.log(answer);
