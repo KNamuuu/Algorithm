@@ -18,10 +18,7 @@ for (const coor of input) {
     coorY.push(y);
 }
 
-coorX.sort((a, b) => a - b);
-coorY.sort((a, b) => a - b);
-
-const lengthX = coorX[coorX.length - 1] - coorX[0];
-const lengthY = coorY[coorY.length - 1] - coorY[0];
+const lengthX = Math.max(...coorX) - Math.min(...coorX);
+const lengthY = Math.max(...coorY) - Math.min(...coorY);
 
 console.log(lengthX * lengthY);
