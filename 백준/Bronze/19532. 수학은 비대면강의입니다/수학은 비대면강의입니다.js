@@ -8,15 +8,6 @@ const input = require("fs")
 
 const [a, b, c, d, e, f] = input;
 
-const answer = [];
-
-for (let i = -999; i < 1000; i++) {
-    for (let j = -999; j < 1000; j++) {
-        if (a * i + b * j === c && d * i + e * j === f) {
-            answer.push(i, j);
-            break;
-        }
-    }
-}
-
-console.log(answer.join(" "));
+const x = (c * e - b * f) / (a * e - b * d);
+const y = (c * d - a * f) / (b * d - a * e);
+console.log([x, y].join(" "));
