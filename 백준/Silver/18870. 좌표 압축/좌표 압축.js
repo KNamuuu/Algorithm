@@ -8,15 +8,12 @@ const input = require("fs")
 const N = Number(input.shift());
 const numbers = input.shift().split(" ").map(Number);
 const uniqueNumbers = Array.from(new Set(numbers)).sort((a, b) => a - b);
-const answer = [];
 
-const rankMap = new Map();
+const map = new Map();
 uniqueNumbers.forEach((num, index) => {
-    rankMap.set(num, index);
+    map.set(num, index);
 });
 
-for (const number of numbers) {
-    answer.push(rankMap.get(number));
-}
+const answer = numbers.map((number) => map.get(number));
 
 console.log(answer.join(" "));
