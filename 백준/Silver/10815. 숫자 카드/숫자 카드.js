@@ -10,12 +10,7 @@ const cards = input.shift().split(" ").map(Number);
 const M = Number(input.shift());
 const numbers = input.shift().split(" ").map(Number);
 
-// const answer = numbers.map((number) => (cards.includes(number) ? 1 : 0));
-// 시간초과 이유: includes가 시간복잡도가 O(n) 이기 때문
-const map = new Map();
-cards.forEach((card, idx) => {
-    map.set(card, idx);
-});
+const cardSet = new Set(cards);
 
-const answer = numbers.map((number) => (map.has(number) ? 1 : 0));
+const answer = numbers.map((number) => (cardSet.has(number) ? 1 : 0));
 console.log(answer.join(" "));
