@@ -21,7 +21,7 @@ class Queue {
         this.size = 0;
     }
 
-    push(item) {
+    enqueue(item) {
         const node = new Node(item);
 
         if (!this.head) {
@@ -35,7 +35,7 @@ class Queue {
         this.size += 1;
     }
 
-    pop() {
+    dequeue() {
         if (this.size === 0) return -1;
 
         const item = this.head.item;
@@ -49,19 +49,17 @@ class Queue {
 }
 
 const queue = new Queue();
-const people = Array.from({ length: N }, (_, i) => i + 1);
-for (const number of people) {
-    queue.push(number);
+for (let i = 1; i <= N; i++) {
+    queue.enqueue(i);
 }
 
 const answer = [];
-let count = 1;
 
 while (queue.size !== 0) {
-    if (count % K === 0) answer.push(queue.pop());
-    else queue.push(queue.pop());
-
-    count++;
+    for (let i = 0; i < K - 1; i++) {
+        queue.enqueue(queue.dequeue());
+    }
+    answer.push(queue.dequeue());
 }
 
 console.log("<" + answer.join(", ") + ">");
