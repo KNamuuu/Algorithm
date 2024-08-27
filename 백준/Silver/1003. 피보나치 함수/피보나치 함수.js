@@ -11,6 +11,7 @@ const max = Math.max(...input) + 1;
 const answer = [];
 const fibo = Array(max).fill(0);
 
+fibo[0] = 0;
 fibo[1] = 1;
 
 for (let i = 2; i < max; i++) {
@@ -18,11 +19,10 @@ for (let i = 2; i < max; i++) {
 }
 
 for (const number of input) {
-    answer.push(
-        `${fibo[number - 1] === undefined ? 1 : fibo[number - 1]} ${
-            fibo[number]
-        }`
-    );
+    const zeroCount = fibo[number - 1] === undefined ? 1 : fibo[number - 1];
+    const oneCount = fibo[number];
+
+    answer.push(`${zeroCount} ${oneCount}`);
 }
 
 console.log(answer.join("\n"));
