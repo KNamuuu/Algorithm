@@ -1,4 +1,4 @@
-class MinHeap {
+class MaxHeap {
     constructor() {
         this.heap = [];
     }
@@ -28,7 +28,7 @@ class MinHeap {
 
         while (
             this.heap[parentIndex] &&
-            this.heap[index] < this.heap[parentIndex]
+            this.heap[index] > this.heap[parentIndex]
         ) {
             this.swap(index, parentIndex);
             index = parentIndex;
@@ -46,16 +46,16 @@ class MinHeap {
             let swapIndex = null;
 
             if (leftChildIndex < length) {
-                if (this.heap[index] > this.heap[leftChildIndex])
+                if (this.heap[index] < this.heap[leftChildIndex])
                     swapIndex = leftChildIndex;
             }
 
             if (rightChildIndex < length) {
                 if (
                     (swapIndex === null &&
-                        this.heap[index] > this.heap[rightChildIndex]) ||
+                        this.heap[index] < this.heap[rightChildIndex]) ||
                     (swapIndex !== null &&
-                        this.heap[leftChildIndex] > this.heap[rightChildIndex])
+                        this.heap[leftChildIndex] < this.heap[rightChildIndex])
                 )
                     swapIndex = rightChildIndex;
             }
@@ -77,12 +77,12 @@ const input = require("fs")
     .map(Number);
 
 const N = input.shift();
-const maxHeap = new MinHeap();
+const maxHeap = new MaxHeap();
 const answer = [];
 
 for (const number of input) {
-    if (number === 0) answer.push(Math.abs(maxHeap.poll()));
-    else maxHeap.add(-number);
+    if (number === 0) answer.push(maxHeap.poll());
+    else maxHeap.add(number);
 }
 
 console.log(answer.join("\n"));
