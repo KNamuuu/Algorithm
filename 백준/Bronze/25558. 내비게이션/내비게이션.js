@@ -7,30 +7,32 @@ const input = require("fs")
 
 let N = Number(input.shift());
 const [s1, s2, e1, e2] = input.shift().split(" ").map(Number);
-let answer = 0;
-let count = 0;
 let min = Infinity;
+let answer = 0;
 
-for (let i = 0; i < input.length; i += Number(input[i]) + 1) {
-    count++;
-    const current = [s1, s2];
-    const M = Number(input[i]);
+let index = 0;
+
+for (let i = 1; i <= N; i++) {
+    const M = Number(input[index]);
+    let currentX = s1;
+    let currentY = s2;
     let distance = 0;
 
-    for (let j = 1; j < M + 1; j++) {
-        const [x, y] = input[i + j].split(" ").map(Number);
-        distance += Math.abs(current[0] - x);
-        distance += Math.abs(current[1] - y);
-        current[0] = x;
-        current[1] = y;
+    for (let j = 1; j <= M; j++) {
+        const [x, y] = input[index + j].split(" ").map(Number);
+        distance += Math.abs(currentX - x) + Math.abs(currentY - y);
+        currentX = x;
+        currentY = y;
     }
-    distance += Math.abs(current[0] - e1);
-    distance += Math.abs(current[1] - e2);
+
+    distance += Math.abs(currentX - e1) + Math.abs(currentY - e2);
 
     if (distance < min) {
         min = distance;
-        answer = count;
+        answer = i;
     }
+
+    index += M + 1;
 }
 
 console.log(answer);
