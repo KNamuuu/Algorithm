@@ -11,37 +11,23 @@ const arr = input
     .split(" ")
     .map(Number)
     .sort((a, b) => a - b);
-const answer = new Set();
+const visited = Array(N).fill(false);
+const answer = [];
 
-function getPermutations(arr, number) {
-    if (number === 1) return arr.map((el) => [el]);
+function dfs(depth, current) {
+    if (depth === M) return answer.push(current.join(" "));
 
-    const result = [];
-    arr.forEach((fixed, index, origin) => {
-        const rest = [...origin.slice(0, index), ...origin.slice(index + 1)];
-        const permutations = getPermutations(rest, number - 1);
-        const attached = permutations.map((permutation) => [
-            fixed,
-            ...permutation,
-        ]);
-
-        result.push(...attached);
-    });
-
-    return result;
-}
-
-const permutations = getPermutations(
-    Array.from({ length: arr.length }, (_, i) => i),
-    M
-);
-
-for (const permutation of permutations) {
-    const line = [];
-    for (const index of permutation) {
-        line.push(arr[index]);
+    let prev = -1;
+    for (let i = 0; i < arr.length; i++) {
+        if (!visited[i] && prev !== arr[i]) {
+            visited[i] = true;
+            dfs(depth + 1, [...current, arr[i]]);
+            visited[i] = false;
+            prev = arr[i];
+        }
     }
-    answer.add(line.join(" "));
 }
 
-console.log([...answer].join("\n"));
+dfs(0, []);
+
+console.log(answer.join("\n"));
