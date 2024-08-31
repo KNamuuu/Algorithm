@@ -13,11 +13,9 @@ const direction = [
 ];
 const N = Number(input.shift());
 const answer = [];
-let pic = input.map((line) => line.split(""));
-let visited = Array.from({ length: N }, () => Array(N).fill(false));
-let count = 0;
+const pic = input.map((line) => line.split(""));
 
-function bfs(x, y, color) {
+function bfs(x, y, color, pic, visited) {
     const queue = [[x, y]];
     visited[x][y] = true;
 
@@ -43,34 +41,26 @@ function bfs(x, y, color) {
     }
 }
 
-for (let i = 0; i < N; i++) {
-    for (let j = 0; j < N; j++) {
-        if (!visited[i][j]) {
-            bfs(i, j, pic[i][j]);
-            count++;
+function countRegions(pic) {
+    let visited = Array.from({ length: N }, () => Array(N).fill(false));
+    let count = 0;
+
+    for (let i = 0; i < N; i++) {
+        for (let j = 0; j < N; j++) {
+            if (!visited[i][j]) {
+                bfs(i, j, pic[i][j], pic, visited);
+                count++;
+            }
         }
     }
-}
-answer.push(count);
 
-pic = pic.map((line) =>
-    line.map((el) => {
-        if (el === "G") return "R";
-        else return el;
-    })
+    return count;
+}
+
+const normalCount = countRegions(pic);
+const colorBlindPic = pic.map((line) =>
+    line.map((color) => (color === "G" ? "R" : color))
 );
-visited = Array.from({ length: N }, () => Array(N).fill(false));
-count = 0;
+const colorBlindCount = countRegions(colorBlindPic);
 
-for (let i = 0; i < N; i++) {
-    for (let j = 0; j < N; j++) {
-        if (!visited[i][j]) {
-            bfs(i, j, pic[i][j]);
-            count++;
-        }
-    }
-}
-
-answer.push(count);
-
-console.log(answer.join("\n"));
+console.log(normalCount + "\n" + colorBlindCount);
