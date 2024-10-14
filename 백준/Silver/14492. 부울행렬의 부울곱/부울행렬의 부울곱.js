@@ -6,16 +6,8 @@ const input = require("fs")
   .split("\n");
 
 const N = Number(input.shift());
-const A = input
-  .slice(0, N)
-  .map((line) =>
-    line.split(" ").map((num) => (Number(num) === 1 ? true : false))
-  );
-const B = input
-  .slice(N, N * 2)
-  .map((line) =>
-    line.split(" ").map((num) => (Number(num) === 1 ? true : false))
-  );
+const A = input.slice(0, N).map((line) => line.split(" ").map(Number));
+const B = input.slice(N, N * 2).map((line) => line.split(" ").map(Number));
 
 let result = 0;
 
