@@ -22,19 +22,28 @@ for (let game = 0; game < T; game++) {
     } else charMap.set(char, [1, idx]);
   });
 
+  let minLength = Infinity;
+  let maxLength = -Infinity;
+
   charMap.forEach((el) => {
     if (el[0] >= K) {
       for (let i = 1; i + K - 1 < el.length; i++) {
-        wordLengthArray.push(el[i + K - 1] - el[i] + 1);
+        // wordLengthArray.push(el[i + K - 1] - el[i] + 1);
+        const wordLength = el[i + K - 1] - el[i] + 1;
+        if (minLength > wordLength) minLength = wordLength;
+        if (maxLength < wordLength) maxLength = wordLength;
       }
     }
   });
 
-  if (wordLengthArray.length === 0) answer.push(-1);
-  else
-    answer.push(
-      Math.min(...wordLengthArray) + " " + Math.max(...wordLengthArray)
-    );
+  // if (wordLengthArray.length === 0) answer.push(-1);
+  // else
+  //   answer.push(
+  //     Math.min(...wordLengthArray) + " " + Math.max(...wordLengthArray)
+  //   );
+
+  if (minLength === Infinity) answer.push(-1);
+  else answer.push(minLength + " " + maxLength);
 }
 
 console.log(answer.join("\n"));
