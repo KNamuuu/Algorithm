@@ -13,7 +13,10 @@ for (let game = 0; game < T; game++) {
 
   charArray.forEach((char, idx) => {
     if (charMap.has(char)) {
-      const arr = [...charMap.get(char), idx];
+      // const arr = [...charMap.get(char), idx];
+      const arr = charMap.get(char);
+      arr.push(idx);
+
       arr[0]++;
       charMap.set(char, arr);
     } else charMap.set(char, [1, idx]);
