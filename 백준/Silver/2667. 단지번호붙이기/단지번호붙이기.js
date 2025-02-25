@@ -3,7 +3,6 @@ let input = require("fs").readFileSync(filePath).toString().trim().split("\n");
 
 const N = +input.shift();
 const map = input.map((line) => line.split("").map(Number));
-const visited = Array.from({ length: N }, () => new Array(N).fill(false));
 const answer = [];
 
 const directions = [
@@ -25,15 +24,8 @@ function bfs() {
       const nx = x + dx;
       const ny = y + dy;
 
-      if (
-        nx >= 0 &&
-        nx < N &&
-        ny >= 0 &&
-        ny < N &&
-        map[nx][ny] === 1 &&
-        !visited[nx][ny]
-      ) {
-        visited[nx][ny] = true;
+      if (nx >= 0 && nx < N && ny >= 0 && ny < N && map[nx][ny] === 1) {
+        map[nx][ny] = 0;
         queue.push([nx, ny]);
         count++;
       }
@@ -45,9 +37,9 @@ function bfs() {
 
 for (let i = 0; i < N; i++) {
   for (let j = 0; j < N; j++) {
-    if (map[i][j] === 1 && !visited[i][j]) {
-      visited[i][j] = true;
+    if (map[i][j] === 1) {
       queue.push([i, j]);
+      map[i][j] = 0;
       answer.push(bfs());
     }
   }
